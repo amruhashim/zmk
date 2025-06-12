@@ -1,56 +1,345 @@
 /*
  * Copyright (c) 2020 The ZMK Contributors
- *
+ * Converted from QMK Cygnus V1 layout for ZMK
  * SPDX-License-Identifier: MIT
  */
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/mouse.h>
 
+// Layer definitions
+#define BASE 0
+#define LOWER 1
+#define RAISE 2
+#define FUNCTION 3
+#define TERMINAL 4
+
+// Custom behaviors for complex keycodes
 / {
-        keymap {
-                compatible = "zmk,keymap";
-
-                default_layer {
-// -----------------------------------------------------------------------------------------
-// |  TAB |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BSPC |
-// | CTRL |  A  |  S  |  D  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
-// | SHFT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  | ESC  |
-//                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
-                        bindings = <
-   &kp TAB   &kp Q &kp W &kp E &kp R &kp T   &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSPC
-   &kp LCTRL &kp A &kp S &kp D &kp F &kp G   &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
-   &kp LSHFT &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp ESC
-                  &kp LGUI &mo 1 &kp SPACE   &kp RET &mo 2 &kp RALT
-                        >;
-                };
-                lower_layer {
-// -----------------------------------------------------------------------------------------
-// |  TAB |  1  |  2  |  3  |  4  |  5  |   |  6  |  7  |  8  |  9  |  0  | BSPC |
-// | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   | LFT | DWN |  UP | RGT |     |      |
-// | SHFT |     |     |     |     |     |   |     |     |     |     |     |      |
-//                    | GUI |     | SPC |   | ENT |     | ALT |
-                        bindings = <
-   &kp TAB    &kp N1       &kp N2       &kp N3       &kp N4       &kp N5         &kp N6   &kp N7   &kp N8 &kp N9    &kp N0 &kp BSPC
-   &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4   &kp LEFT &kp DOWN &kp UP &kp RIGHT &trans &trans
-   &kp LSHFT  &trans       &trans       &trans       &trans       &trans         &trans   &trans   &trans &trans    &trans &trans
-                                    &kp LGUI     &trans       &kp SPACE      &kp RET  &trans   &kp RALT
-                        >;
-                };
-
-                raise_layer {
-// -----------------------------------------------------------------------------------------
-// |  TAB |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  (  |  )  | BSPC |
-// | CTRL |     |     |     |     |     |   |  -  |  =  |  [  |  ]  |  \  |  `   |
-// | SHFT |     |     |     |     |     |   |  _  |  +  |  {  |  }  | "|" |  ~   |
-//                    | GUI |     | SPC |   | ENT |     | ALT |
-                        bindings = <
-   &kp  TAB  &kp EXCL &kp AT &kp HASH &kp DLLR &kp PRCNT   &kp CARET &kp AMPS  &kp ASTRK &kp LPAR &kp RPAR &kp BSPC
-   &kp LCTRL &trans   &trans &trans   &trans   &trans      &kp MINUS &kp EQUAL &kp LBKT  &kp RBKT &kp BSLH &kp GRAVE
-   &kp LSHFT &trans   &trans &trans   &trans   &trans      &kp UNDER &kp PLUS  &kp LBRC  &kp RBRC &kp PIPE &kp TILDE
-                             &kp LGUI &trans   &kp SPACE   &kp RET   &trans    &kp RALT
-                        >;
-                };
+    behaviors {
+        // Tap-hold for layer access
+        lhm: left_hand_positional_hold_tap {
+            compatible = "zmk,behavior-hold-tap";
+            label = "LEFT_POSITIONAL_HOLD_TAP";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <200>;
+            bindings = <&kp>, <&kp>;
         };
+
+        // Custom behavior for CTRL+key combinations
+        ctrl_h: ctrl_h {
+            compatible = "zmk,behavior-mod-morph";
+            label = "CTRL_H";
+            #binding-cells = <0>;
+            bindings = <&kp MINUS>, <&kp LEFT>;
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+
+        ctrl_j: ctrl_j {
+            compatible = "zmk,behavior-mod-morph";
+            label = "CTRL_J";
+            #binding-cells = <0>;
+            bindings = <&kp UNDER>, <&kp DOWN>;
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+
+        ctrl_k: ctrl_k {
+            compatible = "zmk,behavior-mod-morph";
+            label = "CTRL_K";
+            #binding-cells = <0>;
+            bindings = <&kp LBRC>, <&kp UP>;
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+
+        ctrl_l: ctrl_l {
+            compatible = "zmk,behavior-mod-morph";
+            label = "CTRL_L";
+            #binding-cells = <0>;
+            bindings = <&kp RBRC>, <&kp RIGHT>;
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+
+        ctrl_spc: ctrl_spc {
+            compatible = "zmk,behavior-mod-morph";
+            label = "CTRL_SPC";
+            #binding-cells = <0>;
+            bindings = <&kp SEMI>, <&kp LG(SPACE)>;
+            mods = <(MOD_LCTL|MOD_RCTL)>;
+        };
+
+        // W normally, @ when shifted
+        w_at: w_at {
+            compatible = "zmk,behavior-mod-morph";
+            label = "W_AT";
+            #binding-cells = <0>;
+            bindings = <&kp W>, <&kp AT>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        // Quote/Apostrophe - " normally, ' when shifted
+        quot_apos: quot_apos {
+            compatible = "zmk,behavior-mod-morph";
+            label = "QUOT_APOS";
+            #binding-cells = <0>;
+            bindings = <&kp DQT>, <&kp SQT>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+    };
+
+    // Macros for terminal functions
+    macros {
+        // Terminal tab management
+        term_new_tab: term_new_tab {
+            label = "TERM_NEW_TAB";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LG(T)>;
+        };
+
+        term_close_tab: term_close_tab {
+            label = "TERM_CLOSE_TAB";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LG(W)>;
+        };
+
+        term_close_win: term_close_win {
+            label = "TERM_CLOSE_WIN";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LG(LS(W))>;
+        };
+
+        term_next_tab: term_next_tab {
+            label = "TERM_NEXT_TAB";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LG(LS(RBKT))>;
+        };
+
+        term_prev_tab: term_prev_tab {
+            label = "TERM_PREV_TAB";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LG(LS(LBKT))>;
+        };
+
+        // Terminal splits
+        term_split_h: term_split_h {
+            label = "TERM_SPLIT_H";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LG(D)>;
+        };
+
+        term_split_v: term_split_v {
+            label = "TERM_SPLIT_V";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LG(LS(D))>;
+        };
+
+        // Neovim split resizing
+        term_win_left: term_win_left {
+            label = "TERM_WIN_LEFT";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LC(W)>, <&kp LT>;
+        };
+
+        term_win_down: term_win_down {
+            label = "TERM_WIN_DOWN";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LC(W)>, <&kp MINUS>;
+        };
+
+        term_win_up: term_win_up {
+            label = "TERM_WIN_UP";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LC(W)>, <&kp PLUS>;
+        };
+
+        term_win_right: term_win_right {
+            label = "TERM_WIN_RIGHT";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LC(W)>, <&kp GT>;
+        };
+
+        // Terminal navigation
+        term_zoom: term_zoom {
+            label = "TERM_ZOOM";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LG(LS(RET))>;
+        };
+
+        term_fullscreen: term_fullscreen {
+            label = "TERM_FULLSCREEN";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LC(LG(F))>;
+        };
+
+        term_clear_line: term_clear_line {
+            label = "TERM_CLEAR_LINE";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LC(K)>;
+        };
+
+        term_clear_scrn: term_clear_scrn {
+            label = "TERM_CLEAR_SCRN";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LG(K)>;
+        };
+
+        term_home: term_home {
+            label = "TERM_HOME";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LC(A)>;
+        };
+
+        term_end: term_end {
+            label = "TERM_END";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LC(E)>;
+        };
+    };
+
+    // Combos (converted from QMK)
+    combos {
+        compatible = "zmk,combos";
+        
+        combo_esc {
+            timeout-ms = <50>;
+            key-positions = <13 14>; // Q W
+            bindings = <&kp ESC>;
+        };
+
+        combo_tab {
+            timeout-ms = <50>;
+            key-positions = <25 26>; // A S
+            bindings = <&kp TAB>;
+        };
+
+        combo_enter {
+            timeout-ms = <50>;
+            key-positions = <32 33>; // L ;
+            bindings = <&kp RET>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        // ============================================================================
+        // BASE LAYER - QWERTY with Alt access and ergonomic improvements
+        // ============================================================================
+        default_layer {
+            bindings = <
+        //╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮
+        //│  NONE    │    Q     │    W     │    E     │    R     │    T     │   │    Y     │    U     │    I     │    O     │    P     │  NONE    │
+            &none      &kp Q      &kp W      &kp E      &kp R      &kp T          &kp Y      &kp U      &kp I      &kp O      &kp P      &none
+        //├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  NONE    │    A     │    S     │    D     │    F     │    G     │   │    H     │    J     │    K     │    L     │    ;     │  NONE    │
+            &none      &kp A      &kp S      &kp D      &kp F      &kp G          &kp H      &kp J      &kp K      &kp L      &kp SEMI   &none
+        //├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  NONE    │    Z     │    X     │    C     │    V     │    B     │   │    N     │    M     │    ,     │    .     │    /     │  NONE    │
+            &none      &kp Z      &kp X      &kp C      &kp V      &kp B          &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH   &none
+        //╰──────────┴──────────┴──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┴──────────┴──────────╯
+                                            &lhm LCTRL TAB &kp LSHFT &lt LOWER RET   &lt RAISE SPACE &kp BSPC &lhm LGUI ESC
+        //                                 ╰──────────┴──────────┴──────────╯   ╰──────────┴──────────┴──────────╯
+            >;
+        };
+
+        // ============================================================================
+        // LOWER LAYER - Numbers & Navigation
+        // ============================================================================
+        lower_layer {
+            bindings = <
+        //╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮
+        //│  NONE    │    1     │    2     │    3     │    4     │    5     │   │ MS_BTN1  │ MS_WH_UP │ MS_BTN2  │   DEL    │   INS    │  NONE    │
+            &none      &kp N1     &kp N2     &kp N3     &kp N4     &kp N5         &mkp LCLK  &mwh SCROLL_UP &mkp RCLK &kp DEL &kp INS &none
+        //├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  NONE    │    6     │    7     │    8     │    9     │    0     │   │ MS_LEFT  │ MS_DOWN  │  MS_UP   │ MS_RIGHT │  PG_UP   │  NONE    │
+            &none      &kp N6     &kp N7     &kp N8     &kp N9     &kp N0         &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_UP &mmv MOVE_RIGHT &kp PG_UP &none
+        //├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  NONE    │  CMD+Z   │  CMD+X   │  CMD+C   │  CMD+V   │  CMD+B   │   │ MS_BTN3  │MS_WH_DOWN│   HOME   │   END    │  PG_DN   │  NONE    │
+            &none      &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LG(B)      &mkp MCLK  &mwh SCROLL_DOWN &kp HOME &kp END &kp PG_DN &none
+        //╰──────────┴──────────┴──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┴──────────┴──────────╯
+                                            &kp LCTRL  &kp LSHFT  &trans         &trans     &kp BSPC   &kp LGUI
+        //                                 ╰──────────┴──────────┴──────────╯   ╰──────────┴──────────┴──────────╯
+            >;
+        };
+
+        // ============================================================================
+        // RAISE LAYER - Programming Symbols
+        // ============================================================================
+        raise_layer {
+            bindings = <
+        //╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮
+        //│  NONE    │    !     │   W/@    │    #     │    $     │    %     │   │    ^     │    &     │    *     │    (     │    )     │  NONE    │
+            &none      &kp EXCL   &w_at      &kp HASH   &kp DLLR   &kp PRCNT      &kp CARET  &kp AMPS   &kp STAR   &kp LPAR   &kp RPAR   &none
+        //├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  NONE    │    =     │    [     │    ]     │    (     │    )     │   │  CTRL_H  │  CTRL_J  │  CTRL_K  │  CTRL_L  │ CTRL_SPC │  NONE    │
+            &none      &kp EQUAL  &kp LBKT   &kp RBKT   &kp LPAR   &kp RPAR       &ctrl_h    &ctrl_j    &ctrl_k    &ctrl_l    &ctrl_spc  &none
+        //├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  NONE    │    `     │    \     │    |     │    ~     │  "/'/'"  │   │    +     │    '     │    ,     │    .     │ ALT+/    │  NONE    │
+            &none      &kp GRAVE  &kp BSLH   &kp PIPE   &kp TILDE  &quot_apos     &kp PLUS   &kp SQT    &kp COMMA  &kp DOT    &lhm LALT FSLH &none
+        //╰──────────┴──────────┴──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┴──────────┴──────────╯
+                                            &lhm LCTRL TAB &kp LSHFT &mo TERMINAL   &trans     &kp BSPC   &kp LGUI
+        //                                 ╰──────────┴──────────┴──────────╯   ╰──────────┴──────────┴──────────╯
+            >;
+        };
+
+        // ============================================================================
+        // FUNCTION LAYER - F-keys & Mac System Controls
+        // ============================================================================
+        function_layer {
+            bindings = <
+        //╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮
+        //│  NONE    │    F1    │    F2    │    F3    │    F4    │    F5    │   │    F6    │    F7    │    F8    │    F9    │   F10    │  NONE    │
+            &none      &kp F1     &kp F2     &kp F3     &kp F4     &kp F5         &kp F6     &kp F7     &kp F8     &kp F9     &kp F10    &none
+        //├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  NONE    │   F11    │   F12    │  BRID    │  BRIU    │  MUTE    │   │ VOL_DN   │ VOL_UP   │  PREV    │  PLAY    │  NEXT    │  NONE    │
+            &none      &kp F11    &kp F12    &kp C_BRI_DN &kp C_BRI_UP &kp C_MUTE &kp C_VOL_DN &kp C_VOL_UP &kp C_PREV &kp C_PP &kp C_NEXT &none
+        //├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  NONE    │   NONE   │   NONE   │   NONE   │   NONE   │   NONE   │   │   NONE   │   NONE   │ CMD+S+3  │ CMD+S+4  │ CMD+S+5  │  NONE    │
+            &none      &none      &none      &none      &none      &none          &none      &none      &kp LG(LS(N3)) &kp LG(LS(N4)) &kp LG(LS(N5)) &none
+        //╰──────────┴──────────┴──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┴──────────┴──────────╯
+                                            &kp LCTRL  &none      &none          &kp SPACE  &kp BSPC   &kp LGUI
+        //                                 ╰──────────┴──────────┴──────────╯   ╰──────────┴──────────┴──────────╯
+            >;
+        };
+
+        // ============================================================================
+        // TERMINAL LAYER - Terminal Control & Neovim
+        // ============================================================================
+        terminal_layer {
+            bindings = <
+        //╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮
+        //│  NONE    │  TAB_1   │  TAB_2   │  TAB_3   │  TAB_4   │  TAB_5   │   │SCROLL_UP │ FONT_INC │ FONT_DEC │ FONT_RST │CLR_SCRN  │  NONE    │
+            &none      &kp LG(N1) &kp LG(N2) &kp LG(N3) &kp LG(N4) &kp LG(N5)     &kp PG_UP  &kp LG(PLUS) &kp LG(MINUS) &kp LG(N0) &term_clear_scrn &none
+        //├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  NONE    │ NEW_TAB  │ SPLIT_H  │ SPLIT_V  │ NEXT_TAB │ PREV_TAB │   │ WIN_LEFT │ WIN_DOWN │  WIN_UP  │WIN_RIGHT │SCROLL_DN │  NONE    │
+            &none      &term_new_tab &term_split_h &term_split_v &term_next_tab &term_prev_tab &term_win_left &term_win_down &term_win_up &term_win_right &kp PG_DN &none
+        //├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+        //│  NONE    │   ZOOM   │CLOSE_WIN │CLOSE_TAB │FULLSCREEN│   NONE   │   │   HOME   │ PREV_WIN │ NEXT_WIN │   END    │CLR_LINE  │  NONE    │
+            &none      &term_zoom &term_close_win &term_close_tab &term_fullscreen &none    &term_home &kp LG(LBKT) &kp LG(RBKT) &term_end &term_clear_line &none
+        //╰──────────┴──────────┴──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┴──────────┴──────────╯
+                                            &tog FUNCTION &trans   &trans         &trans     &trans     &kp RSHFT
+        //                                 ╰──────────┴──────────┴──────────╯   ╰──────────┴──────────┴──────────╯
+            >;
+        };
+    };
 };
