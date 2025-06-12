@@ -7,7 +7,7 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/mouse.h>
+#include <dt-bindings/zmk/pointing.h>
 
 // Layer definitions
 #define BASE 0
@@ -243,16 +243,16 @@
         lower_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│  NONE    │    1     │    2     │    3     │    4     │    5     │   │  M_CLK   │  M_SCR_U │  M_RCK   │   DEL    │   INS    │  NONE    │
+        //│  NONE    │    1     │    2     │    3     │    4     │    5     │   │  M_LCLK  │  M_SCR_U │  M_RCLK  │   DEL    │   INS    │  NONE    │
             &none      &kp N1     &kp N2     &kp N3     &kp N4     &kp N5         &mkp LCLK  &msc SCRL_UP &mkp RCLK &kp DEL    &kp INS    &none
         //├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  NONE    │    6     │    7     │    8     │    9     │    0     │   │  M_LEFT  │  M_DOWN  │   M_UP   │ M_RIGHT  │  PG_UP   │  NONE    │
             &none      &kp N6     &kp N7     &kp N8     &kp N9     &kp N0         &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_UP &mmv MOVE_RIGHT &kp PG_UP &none
         //├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  NONE    │  CMD+Z   │  CMD+X   │  CMD+C   │  CMD+V   │  CMD+B   │   │  M_MCK   │ M_SCR_D  │   HOME   │   END    │  PG_DN   │  NONE    │
+        //│  NONE    │  CMD+Z   │  CMD+X   │  CMD+C   │  CMD+V   │  CMD+B   │   │  M_MCLK  │ M_SCR_D  │   HOME   │   END    │  PG_DN   │  NONE    │
             &none      &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LG(B)      &mkp MCLK  &msc SCRL_DOWN &kp HOME &kp END    &kp PG_DN  &none
         //╰──────────┴──────────┴──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┴──────────┴──────────╯
-                                            &kp LCTRL  &kp LSHFT  &trans         &trans     &kp BSPC   &kp LGUI
+                                            &kp LCTRL  &kp LSHFT  &trans         &mo TERMINAL &kp BSPC   &kp LGUI
         //                                 ╰──────────┴──────────┴──────────╯   ╰──────────┴──────────┴──────────╯
             >;
         };
