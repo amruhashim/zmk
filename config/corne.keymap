@@ -22,7 +22,6 @@
         // Tap-hold for layer access
         lhm: left_hand_positional_hold_tap {
             compatible = "zmk,behavior-hold-tap";
-            label = "LEFT_POSITIONAL_HOLD_TAP";
             #binding-cells = <2>;
             flavor = "tap-preferred";
             tapping-term-ms = <200>;
@@ -33,7 +32,6 @@
         // Custom behavior for CTRL+key combinations
         ctrl_h: ctrl_h {
             compatible = "zmk,behavior-mod-morph";
-            label = "CTRL_H";
             #binding-cells = <0>;
             bindings = <&kp MINUS>, <&kp LEFT>;
             mods = <(MOD_LCTL|MOD_RCTL)>;
@@ -41,7 +39,6 @@
 
         ctrl_j: ctrl_j {
             compatible = "zmk,behavior-mod-morph";
-            label = "CTRL_J";
             #binding-cells = <0>;
             bindings = <&kp UNDER>, <&kp DOWN>;
             mods = <(MOD_LCTL|MOD_RCTL)>;
@@ -49,7 +46,6 @@
 
         ctrl_k: ctrl_k {
             compatible = "zmk,behavior-mod-morph";
-            label = "CTRL_K";
             #binding-cells = <0>;
             bindings = <&kp LBRC>, <&kp UP>;
             mods = <(MOD_LCTL|MOD_RCTL)>;
@@ -57,7 +53,6 @@
 
         ctrl_l: ctrl_l {
             compatible = "zmk,behavior-mod-morph";
-            label = "CTRL_L";
             #binding-cells = <0>;
             bindings = <&kp RBRC>, <&kp RIGHT>;
             mods = <(MOD_LCTL|MOD_RCTL)>;
@@ -65,7 +60,6 @@
 
         ctrl_spc: ctrl_spc {
             compatible = "zmk,behavior-mod-morph";
-            label = "CTRL_SPC";
             #binding-cells = <0>;
             bindings = <&kp SEMI>, <&kp LG(SPACE)>;
             mods = <(MOD_LCTL|MOD_RCTL)>;
@@ -74,7 +68,6 @@
         // W normally, @ when shifted
         w_at: w_at {
             compatible = "zmk,behavior-mod-morph";
-            label = "W_AT";
             #binding-cells = <0>;
             bindings = <&kp W>, <&kp AT>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
@@ -83,7 +76,6 @@
         // Quote/Apostrophe - " normally, ' when shifted
         quot_apos: quot_apos {
             compatible = "zmk,behavior-mod-morph";
-            label = "QUOT_APOS";
             #binding-cells = <0>;
             bindings = <&kp DQT>, <&kp SQT>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
@@ -94,35 +86,30 @@
     macros {
         // Terminal tab management
         term_new_tab: term_new_tab {
-            label = "TERM_NEW_TAB";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LG(T)>;
         };
 
         term_close_tab: term_close_tab {
-            label = "TERM_CLOSE_TAB";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LG(W)>;
         };
 
         term_close_win: term_close_win {
-            label = "TERM_CLOSE_WIN";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LG(LS(W))>;
         };
 
         term_next_tab: term_next_tab {
-            label = "TERM_NEXT_TAB";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LG(LS(RBKT))>;
         };
 
         term_prev_tab: term_prev_tab {
-            label = "TERM_PREV_TAB";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LG(LS(LBKT))>;
@@ -130,14 +117,12 @@
 
         // Terminal splits
         term_split_h: term_split_h {
-            label = "TERM_SPLIT_H";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LG(D)>;
         };
 
         term_split_v: term_split_v {
-            label = "TERM_SPLIT_V";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LG(LS(D))>;
@@ -145,28 +130,24 @@
 
         // Neovim split resizing
         term_win_left: term_win_left {
-            label = "TERM_WIN_LEFT";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LC(W)>, <&kp LT>;
         };
 
         term_win_down: term_win_down {
-            label = "TERM_WIN_DOWN";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LC(W)>, <&kp MINUS>;
         };
 
         term_win_up: term_win_up {
-            label = "TERM_WIN_UP";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LC(W)>, <&kp PLUS>;
         };
 
         term_win_right: term_win_right {
-            label = "TERM_WIN_RIGHT";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LC(W)>, <&kp GT>;
@@ -174,42 +155,36 @@
 
         // Terminal navigation
         term_zoom: term_zoom {
-            label = "TERM_ZOOM";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LG(LS(RET))>;
         };
 
         term_fullscreen: term_fullscreen {
-            label = "TERM_FULLSCREEN";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LC(LG(F))>;
         };
 
         term_clear_line: term_clear_line {
-            label = "TERM_CLEAR_LINE";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LC(K)>;
         };
 
         term_clear_scrn: term_clear_scrn {
-            label = "TERM_CLEAR_SCRN";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LG(K)>;
         };
 
         term_home: term_home {
-            label = "TERM_HOME";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LC(A)>;
         };
 
         term_end: term_end {
-            label = "TERM_END";
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp LC(E)>;
