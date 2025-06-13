@@ -214,6 +214,15 @@
         };
     };
 
+    // Conditional layers - replicating QMK's tri-layer functionality
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        tri_layer {
+            if-layers = <LOWER RAISE>;
+            then-layer = <TERMINAL>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -223,8 +232,8 @@
         default_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│  NONE    │    Q     │    W     │    E     │    R     │    T     │   │    Y     │    U     │    I     │    O     │    P     │  NONE    │
-            &none      &kp Q      &kp W      &kp E      &kp R      &kp T          &kp Y      &kp U      &kp I      &kp O      &kp P      &none
+        //│  NONE    │    Q     │    W     │    E     │    R     │    T     │   │    Y     │    U     │    I     │    O     │    P     │ FUNCTION │
+            &none      &kp Q      &kp W      &kp E      &kp R      &kp T          &kp Y      &kp U      &kp I      &kp O      &kp P      &mo FUNCTION
         //├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  NONE    │    A     │    S     │    D     │    F     │    G     │   │    H     │    J     │    K     │    L     │    ;     │  NONE    │
             &none      &kp A      &kp S      &kp D      &kp F      &kp G          &kp H      &kp J      &kp K      &kp L      &kp SEMI   &none
@@ -243,14 +252,14 @@
         lower_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│  NONE    │    1     │    2     │    3     │    4     │    5     │   │  M_LCLK  │  M_SCR_U │  M_RCLK  │   DEL    │   INS    │  NONE    │
-            &none      &kp N1     &kp N2     &kp N3     &kp N4     &kp N5         &mkp LCLK  &msc SCRL_UP &mkp RCLK &kp DEL    &kp INS    &none
+        //│  NONE    │    1     │    2     │    3     │    4     │    5     │   │   MB1    │  SCR_UP  │   MB2    │   DEL    │   INS    │  NONE    │
+            &none      &kp N1     &kp N2     &kp N3     &kp N4     &kp N5         &mkp MB1   &msc SCRL_UP &mkp MB2 &kp DEL    &kp INS    &none
         //├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  NONE    │    6     │    7     │    8     │    9     │    0     │   │  M_LEFT  │  M_DOWN  │   M_UP   │ M_RIGHT  │  PG_UP   │  NONE    │
+        //│  NONE    │    6     │    7     │    8     │    9     │    0     │   │ MV_LEFT  │ MV_DOWN  │  MV_UP   │ MV_RIGHT │  PG_UP   │  NONE    │
             &none      &kp N6     &kp N7     &kp N8     &kp N9     &kp N0         &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_UP &mmv MOVE_RIGHT &kp PG_UP &none
         //├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  NONE    │  CMD+Z   │  CMD+X   │  CMD+C   │  CMD+V   │  CMD+B   │   │  M_MCLK  │ M_SCR_D  │   HOME   │   END    │  PG_DN   │  NONE    │
-            &none      &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LG(B)      &mkp MCLK  &msc SCRL_DOWN &kp HOME &kp END    &kp PG_DN  &none
+        //│  NONE    │  CMD+Z   │  CMD+X   │  CMD+C   │  CMD+V   │  CMD+B   │   │   MB3    │ SCR_DOWN │   HOME   │   END    │  PG_DN   │  NONE    │
+            &none      &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &kp LG(B)      &mkp MB3   &msc SCRL_DOWN &kp HOME &kp END    &kp PG_DN  &none
         //╰──────────┴──────────┴──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┴──────────┴──────────╯
                                             &kp LCTRL  &kp LSHFT  &trans         &mo TERMINAL &kp BSPC   &kp LGUI
         //                                 ╰──────────┴──────────┴──────────╯   ╰──────────┴──────────┴──────────╯
@@ -272,7 +281,7 @@
         //│  NONE    │    `     │    \     │    |     │    ~     │  "/'/'"  │   │    +     │    '     │    ,     │    .     │ ALT+/    │  NONE    │
             &none      &kp GRAVE  &kp BSLH   &kp PIPE   &kp TILDE  &quot_apos     &kp PLUS   &kp SQT    &kp COMMA  &kp DOT    &lhm LALT FSLH &none
         //╰──────────┴──────────┴──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┴──────────┴──────────╯
-                                            &lhm LCTRL TAB &kp LSHFT &mo TERMINAL   &trans     &kp BSPC   &kp LGUI
+                                            &lhm LCTRL TAB &kp LSHFT &lt LOWER RET   &lt RAISE SPACE &kp BSPC &lhm LGUI ESC
         //                                 ╰──────────┴──────────┴──────────╯   ╰──────────┴──────────┴──────────╯
             >;
         };
@@ -283,8 +292,8 @@
         function_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│  NONE    │    F1    │    F2    │    F3    │    F4    │    F5    │   │    F6    │    F7    │    F8    │    F9    │   F10    │  NONE    │
-            &none      &kp F1     &kp F2     &kp F3     &kp F4     &kp F5         &kp F6     &kp F7     &kp F8     &kp F9     &kp F10    &none
+        //│ SOFT_OFF │    F1    │    F2    │    F3    │    F4    │    F5    │   │    F6    │    F7    │    F8    │    F9    │   F10    │  NONE    │
+            &soft_off  &kp F1     &kp F2     &kp F3     &kp F4     &kp F5         &kp F6     &kp F7     &kp F8     &kp F9     &kp F10    &none
         //├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  NONE    │   F11    │   F12    │  BRID    │  BRIU    │  MUTE    │   │ VOL_DN   │ VOL_UP   │  PREV    │  PLAY    │  NEXT    │  NONE    │
             &none      &kp F11    &kp F12    &kp C_BRI_DN &kp C_BRI_UP &kp C_MUTE &kp C_VOL_DN &kp C_VOL_UP &kp C_PREV &kp C_PP &kp C_NEXT &none
@@ -312,7 +321,7 @@
         //│  NONE    │   ZOOM   │CLOSE_WIN │CLOSE_TAB │FULLSCREEN│   NONE   │   │   HOME   │ PREV_WIN │ NEXT_WIN │   END    │CLR_LINE  │  NONE    │
             &none      &term_zoom &term_close_win &term_close_tab &term_fullscreen &none    &term_home &kp LG(LBKT) &kp LG(RBKT) &term_end &term_clear_line &none
         //╰──────────┴──────────┴──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┴──────────┴──────────╯
-                                            &tog FUNCTION &trans   &trans         &trans     &trans     &kp RSHFT
+                                            &none      &trans     &trans         &trans     &trans     &kp RSHFT
         //                                 ╰──────────┴──────────┴──────────╯   ╰──────────┴──────────┴──────────╯
             >;
         };
