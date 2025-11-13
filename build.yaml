@@ -20,6 +20,6 @@
 ---
 include:
   - board: sparkfun_pro_micro_rp2040
-    shield: skeletyl_left
+    shield: corne_left
   - board: sparkfun_pro_micro_rp2040
-    shield: skeletyl_right
+    shield: corne_right
